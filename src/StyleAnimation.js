@@ -9,11 +9,14 @@ import {
 	Text,
 	StyleSheet,
 	Animated,
-	Easing
+	Easing,
+	StyleSheetRegistry
 } from 'react-native';
 
 import KeyFrames from './KeyFrameGenerator';
-export {KeyFrames}; 
+export { KeyFrames };
+
+
 export default class StyleAnimated extends Component {
 	constructor() {
 		super()
@@ -39,10 +42,29 @@ export default class StyleAnimated extends Component {
 			inputRange: [0, 1],
 			outputRange: ['0deg', '360deg']
 		})
-		console.log('...',this.props.children)
+		console.log('...', this.props.children);
+		
+		let theStyle = this.props.style;
+		if (!isNaN(theStyle)) { 
+			theStyle = StyleSheetRegistry.getStyleByID(theStyle);
+		}
+		let animation = {};
+		let keyNames = Object.keys(theStyle);
+		keyNames.forEach(key => {
+			if(/animation[A-Z][a-z]+/.test(key)){
+				animation[key]=theStyle[key];
+				delete theStyle[key];
+			}
+		})
+
+		let child = React.cloneElement(
+			React.Children.only(this.props.children),
+			{
+				style: theStyle
+			})
 		return (
 			<Animated.View style={[this.props.style, { transform: [{ rotate: spin }] }]}>
-				{this.props.children}
+				{child}
 			</Animated.View>
 		)
 	}

@@ -27,8 +27,8 @@ export default class App extends Component {
       <View style={styles.container}>
         <Text>Hello Worldie</Text>
 
-        <StyleAnimated style={styles.img} >
-          <Image style={styles.img} source={{ uri: 'https://s3.amazonaws.com/media-p.slid.es/uploads/alexanderfarennikov/images/1198519/reactjs.png' }} />
+        <StyleAnimated style={styles.img} animations>
+          <Image source={{ uri: 'https://s3.amazonaws.com/media-p.slid.es/uploads/alexanderfarennikov/images/1198519/reactjs.png' }} />
 
         </StyleAnimated>
       </View>
@@ -65,9 +65,5 @@ const styles = {
     animationDirection: 'reverse', // normal, reverse , alternate, alternate-reverse
     animationFillMode: 'none', //backwards, forwards, 
 
-
-    // or 
-    //
-    animation: 'rotate 4s linear 2s infinite alternate',
   }
 }
